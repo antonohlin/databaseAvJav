@@ -13,4 +13,14 @@ public class Song {
     Song (String title){
         this.title = title;
     }
+    Song(String[] info){
+        this.title = info[0];
+    }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "title='" + title + '\'' +
+                '}';
+    }
 }
