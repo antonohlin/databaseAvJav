@@ -10,9 +10,7 @@ public class Song {
         lengthInSeconds = 0;
         year = 2020;
     }
-    Song (String title, int lengthInSeconds, int year){
+    Song (String title){
         this.title = title;
-        this.lengthInSeconds = lengthInSeconds;
-        this.year = year;
     }
 }

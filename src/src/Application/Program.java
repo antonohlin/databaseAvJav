@@ -1,8 +1,10 @@
 package Application;
 
-public class Program {
+import Databse.Utility;
 
+public class Program {
     Program(){
-        System.out.println("Hello World!");
+        Menus.printWelcomeMenu();
+        Utility.menuChoiceSwitch();
     }
 }
