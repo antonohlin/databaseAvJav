@@ -1,6 +1,8 @@
 package Databse;
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable {
     String title;
     int lengthInSeconds;
     int year;

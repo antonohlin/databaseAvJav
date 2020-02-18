@@ -1,25 +1,15 @@
 package Databse;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Filegenerator {
-    static File songs = new File("songs/songs.txt");
-    static FileWriter writer;
-
-    static {
-        try {
-            writer = new FileWriter(songs, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    private static final String filepath = "songs\\songs.txt";
 
     Filegenerator(){
 
     }
-    public static void newSong(String[] info) {
+    public static void newSong(String[] info){
         String song = info[0];
         String artist = info[1];
         String album = info[2];
@@ -27,11 +17,13 @@ public class Filegenerator {
                 "Artist: %s\n" +
                 "Album: %s\n",song, artist, album);
         try {
-            writer.write(song+"\n");
-            writer.close();
-        }
-        catch (IOException e){
+            FileWriter fileWriter = new FileWriter(filepath, true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.printf("\nSong: %s, Artist: %s, Album: %s",song, artist,album);
+            printWriter.close();
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
+
 }
