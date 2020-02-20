@@ -3,13 +3,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Filegenerator {
+public class Filegenerator implements Runnable {
     private static final String filepath = "songs\\songs.txt";
 
     Filegenerator(){
 
     }
-    public static void newSong(String[] info){
+    public static void saveInfo(String[] info){
+
         String song = info[0];
         String artist = info[1];
         String album = info[2];
@@ -26,4 +27,8 @@ public class Filegenerator {
         }
     }
 
+    @Override
+    public void run() {
+
+    }
 }

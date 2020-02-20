@@ -3,14 +3,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Utility {
+public class Utility implements Runnable {
     private static final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
     Utility(){
 
     }
 
-    public static String[] gatherSongInfo(){
+    public static String[] collectInfo(){
         String[] info = new String[3];
         System.out.println("Ange låttitel: ");
         String songTitle = getLine();
@@ -32,8 +32,8 @@ public class Utility {
                 case 1:
                     break;
                 case 2:
-                    String[] info = Utility.gatherSongInfo();
-                    Filegenerator.newSong(info);
+                    String[] info = Utility.collectInfo();
+                    Filegenerator.saveInfo(info);
                     break;
                 default:
                     System.out.println("Ogiltigt val, försök igen!");
@@ -51,5 +51,10 @@ public class Utility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void run() {
+
     }
 }

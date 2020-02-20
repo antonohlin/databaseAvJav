@@ -1,22 +1,22 @@
-package Databse;
+package Application;
 
 import java.io.Serializable;
 
 public class Song implements Serializable {
     String title;
-    int lengthInSeconds;
-    int year;
+    String artist;
+    String album;
     int songID;
     Song(){
         title = "untitled";
-        lengthInSeconds = 0;
-        year = 2020;
     }
     Song (String title){
         this.title = title;
     }
     Song(String[] info){
         this.title = info[0];
+        this.artist = info[1];
+        this.album = info[2];
     }
 
     @Override
