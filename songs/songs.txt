@@ -11,4 +11,27 @@ Song: 2, Artist: 2, Album: 2
 Song: hejdd, Artist: ddada, Album: eeeee
 Song: Listlåt, Artist: listartist, Album: listablum
 Song: loop, Artist: poop, Album: scopp
-Song: låtloop, Artist: fdfsf, Album: gr
+Song: låtloop, Artist: fdfsf, Album: gr[Premiär: , Spänning, True, Rädd, Ja]
+
+[Premiär: , Spännande, True, Rädd, Ja]
+[NSyggt, eller, ja]
+[Test: , Hur: , undrar:.:, mycket: , jaja:.:]
+[hej: , test: , test:.:]
+false
+
+[what: , the: , fuck:.:]
+[file:what, the, fuck]
+[serialize, hoppas, jag]
+[serialize, annan, path]
+[hej, hej, hej]
+[ser, ser, ser]
+[tvek, tvek, tvek]
+[po, det, igen]
+[heeeeeere, weeeeee, goooooooo]
+[hej, hej, hej]
+[, , ]
+[, , ]
+[tjabbbbbaaa, ja, då]
+[byxor, är, skönt, sten, majs]
+[två, två, två]
+[song1, Title, Lost, artist, Anouk, album, anouk]

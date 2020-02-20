@@ -11,12 +11,7 @@ public class Utility implements Runnable {
 
     }
 
-    public static void addFile(){
-        System.out.println("Ange ett filnamn: ");
-        String fileName = Utility.getLine();
-        List<String> fileInformation = FileManager.collectInfo(fileName);
 
-    }
 
     public static void menu(){
         System.out.println("Hej vad vill du göra?");
@@ -33,7 +28,7 @@ public class Utility implements Runnable {
                     Utility.addFile();
                     break;
                 case 2:
-                    System.out.println("Get info");
+                    Utility.getFileInfo();
                     break;
                 case 3:
                     System.out.println("print all");
@@ -48,6 +43,21 @@ public class Utility implements Runnable {
                     break;
             }
         } while (menuChoice < 1 || menuChoice > 5 );
+    }
+
+    public static void addFile(){
+        System.out.println("Ange ett filnamn: ");
+        String fileName = Utility.getLine().toLowerCase();
+        List<String> fileInformation = FileManager.collectInfo(fileName);
+        FileManager.saveInfo(fileInformation);
+        Serializer.serialize(fileInformation, fileName);
+    }
+
+    private static void getFileInfo() {
+        System.out.print("Ange filnamn: ");
+        String fileName = Utility.getLine().toLowerCase();
+        Object deSer = Serializer.deserialize(fileName);
+        System.out.println(deSer.toString());
     }
 
     public static int getInt(){
