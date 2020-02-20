@@ -1,4 +1,4 @@
-package Databse;
+package Database;
 
 public class Database implements Runnable{
 
@@ -17,7 +17,7 @@ public class Database implements Runnable{
 
     @Override
     public void run() {
-        new Filegenerator();
+        new FileManager();
         new Serializer();
         new Utility();
     }

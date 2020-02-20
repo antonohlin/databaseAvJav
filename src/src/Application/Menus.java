@@ -5,11 +5,11 @@ public class Menus {
 
     }
     public static void printWelcomeMenu(){
-        System.out.println("Hej vad vill du göra?");
-        System.out.println("[1] Söka i låtbiblioteket");
-        System.out.println("[2] Lägga till en ny låt");
-        System.out.println("[3] Redigera en existerande låt");
-        System.out.println("[4] Lägga till en ny artist");
-        System.out.println("[5] Lägga till ett nytt album");
+        System.out.println("Startmeny för cool app!");
+        System.out.println("[1] Appfunktion");
+        System.out.println("[2] Appfunktion");
+        System.out.println("[3] Appfunktion");
+        System.out.println("[4] Tråkig databas.");
+        System.out.println("[5] Avsluta");
     }
 }

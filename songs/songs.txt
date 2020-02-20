@@ -9,3 +9,6 @@ Song: HEj, Artist: hej, Album: då
 Song: hej, Artist: då, Album: papapap
 Song: 2, Artist: 2, Album: 2
 Song: hejdd, Artist: ddada, Album: eeeee
+Song: Listlåt, Artist: listartist, Album: listablum
+Song: loop, Artist: poop, Album: scopp
+Song: låtloop, Artist: fdfsf, Album: gr
