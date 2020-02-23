@@ -15,9 +15,10 @@ public class Database implements Runnable{
         databaseThread.setDaemon(true);
         databaseThread.start();
     }
-    public static String getFilepath() {
+    static String getFilepath() {
         return filepath;
     }
+
     @Override
     public void run() {
         new FileManager();

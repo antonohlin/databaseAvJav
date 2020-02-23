@@ -3,7 +3,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Utility implements Runnable {
     private static final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -44,16 +47,21 @@ public class Utility implements Runnable {
     }
 
     private static void printAllInfo() {
-
         try {
             BufferedReader lineReader = new BufferedReader(new FileReader(Database.getFilepath()));
             String filesLine = null;
             while ((filesLine = lineReader.readLine()) != null) {
-                System.out.println(filesLine);
+                Stream.of(filesLine)
+                        .map(s -> s.replace(",",""))
+                        .map(s -> s.replace("[", ""))
+                        .map(s -> s.replace("]", ""))
+                        .map("Filename:"::concat)
+                        .peek(System.out::println).collect(Collectors.toList());
+                //System.out.println(filesLine);
             }
             lineReader.close();
         } catch (IOException ex) {
-            System.err.println(ex);
+            ex.printStackTrace();
         }
     }
 
