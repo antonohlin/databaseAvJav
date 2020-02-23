@@ -1,17 +1,15 @@
 package Database;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
 public class Utility implements Runnable {
     private static final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-
     Utility(){
 
     }
-
-
 
     public static void menu(){
         System.out.println("Hej vad vill du göra?");
@@ -31,7 +29,7 @@ public class Utility implements Runnable {
                     Utility.getFileInfo();
                     break;
                 case 3:
-                    System.out.println("print all");
+                    Utility.printAllInfo();
                     break;
                 case 4:
                     System.out.println("edit file");
@@ -43,6 +41,20 @@ public class Utility implements Runnable {
                     break;
             }
         } while (menuChoice < 1 || menuChoice > 5 );
+    }
+
+    private static void printAllInfo() {
+
+        try {
+            BufferedReader lineReader = new BufferedReader(new FileReader(Database.getFilepath()));
+            String filesLine = null;
+            while ((filesLine = lineReader.readLine()) != null) {
+                System.out.println(filesLine);
+            }
+            lineReader.close();
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
     }
 
     public static void addFile(){

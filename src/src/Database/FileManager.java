@@ -7,13 +7,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileManager implements Runnable {
-    private static final String filepath = "songs\\songs.txt";
-    final static Scanner input = new Scanner(System.in);
+    private final static Scanner input = new Scanner(System.in);
 
     FileManager(){
 
     }
-    public static List<String> collectInfo(String fileName){
+    static List<String> collectInfo(String fileName){
         List<String> info = new ArrayList<>();
         info.add(fileName);
         String cont;
@@ -34,9 +33,9 @@ public class FileManager implements Runnable {
         return info;
     }
 
-    public static void saveInfo(List<String> info){
+    static void saveInfo(List<String> info){
         try {
-            FileWriter fileWriter = new FileWriter(filepath, true);
+            FileWriter fileWriter = new FileWriter(Database.getFilepath(), true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.println(info);
             printWriter.close();
@@ -44,6 +43,8 @@ public class FileManager implements Runnable {
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void run() {

@@ -1,6 +1,7 @@
 package Database;
 
 public class Database implements Runnable{
+    private static final String filepath = "src\\src\\Database\\Files\\filesText\\files.txt";
 
     //TODO:A database is a collection of information
     // that is organized so that it can be easily accessed, managed and updated.
@@ -14,7 +15,9 @@ public class Database implements Runnable{
         databaseThread.setDaemon(true);
         databaseThread.start();
     }
-
+    public static String getFilepath() {
+        return filepath;
+    }
     @Override
     public void run() {
         new FileManager();
