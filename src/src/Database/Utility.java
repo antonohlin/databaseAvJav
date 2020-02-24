@@ -1,9 +1,7 @@
 package Database;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,7 +33,7 @@ public class Utility implements Runnable {
                     Utility.printAllInfo();
                     break;
                 case 4:
-                    System.out.println("edit file");
+                    Utility.editFile();
                     break;
                 case 5:
                     break;
@@ -46,13 +44,24 @@ public class Utility implements Runnable {
         } while (menuChoice < 1 || menuChoice > 5 );
     }
 
+    private static void editFile() {
+        System.out.println("Sök efter fil att redigera: ");
+        String search = Utility.getLine();
+        if (Utility.search(search).size() > 0){
+            for (String s : Utility.search(search)) {
+                System.out.println(s);
+            }
+            System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat" );
+        }
+    }
+
     private static void printAllInfo() {
         try {
             BufferedReader lineReader = new BufferedReader(new FileReader(Database.getFilepath()));
-            String filesLine = null;
+            String filesLine;
             while ((filesLine = lineReader.readLine()) != null) {
                 Stream.of(filesLine)
-                        .map(s -> s.replace(",",""))
+                        .map(s -> s.replace(", "," Value:"))
                         .map(s -> s.replace("[", ""))
                         .map(s -> s.replace("]", ""))
                         .map("Filename:"::concat)
@@ -65,9 +74,46 @@ public class Utility implements Runnable {
         }
     }
 
+    private static List<String> search(String search){
+        List<String> searchResults = new ArrayList<>();
+        try {
+            BufferedReader lineReader = new BufferedReader(new FileReader(Database.getFilepath()));
+            String filesLine;
+            while ((filesLine = lineReader.readLine()) != null) {
+                filesLine = filesLine.split(" ")[0]
+                        .replace("[","")
+                        .replace(",","");
+                assert search != null;
+                if (filesLine.contains(search)){
+                    searchResults.add(filesLine);
+                }
+            }
+            lineReader.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return searchResults;
+    }
+
     public static void addFile(){
+        boolean available = false;
         System.out.println("Ange ett filnamn: ");
         String fileName = Utility.getLine().toLowerCase();
+        do {
+            if (Utility.search(fileName).size() > 0) {
+                for (String s : Utility.search(fileName)) {
+                    if (fileName.equals(s)) {
+                        available = false;
+                        System.out.println("Filnamnet: " + s + " finns redan. Ange ett nytt filnamn: ");
+                        fileName = Utility.getLine().toLowerCase(); break;
+                    } else {
+                        available = true;
+                    }
+                }
+            } else {
+                available = true;
+            }
+        }while (!available);
         List<String> fileInformation = FileManager.collectInfo(fileName);
         FileManager.saveInfo(fileInformation);
         Serializer.serialize(fileInformation, fileName);

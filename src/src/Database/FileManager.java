@@ -12,16 +12,14 @@ public class FileManager implements Runnable {
     FileManager(){
 
     }
+
     static List<String> collectInfo(String fileName){
         List<String> info = new ArrayList<>();
         info.add(fileName);
         String cont;
         do {
-            System.out.println("Ange variabel: ");
-            String type = Utility.getLine();
-            System.out.println("Ange värde: ");
+            System.out.println("Ange variabel/värde: ");
             String value = Utility.getLine();
-            info.add(type);
             info.add(value);
             System.out.println("Lägga till fler variabler? Y/N");
             cont = input.next().toUpperCase();
