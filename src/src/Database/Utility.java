@@ -1,15 +1,16 @@
 package Database;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Utility implements Runnable {
     private static final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
     Utility(){
 
     }
@@ -26,16 +27,16 @@ public class Utility implements Runnable {
             menuChoice = Utility.getInt();
             switch (menuChoice) {
                 case 1:
-                    Utility.addFile();
+                    //Utility.add();
                     break;
                 case 2:
-                    Utility.getFileInfo();
+                   // Utility.getFileInfo();
                     break;
                 case 3:
-                    Utility.printAllInfo();
+                   // Utility.printAllInfo();
                     break;
                 case 4:
-                    Utility.editFile();
+                   // Utility.editFile();
                     break;
                 case 5:
                     break;
@@ -94,12 +95,12 @@ public class Utility implements Runnable {
             BufferedReader lineReader = new BufferedReader(new FileReader(Database.getFilepath()));
             String filesLine;
             while ((filesLine = lineReader.readLine()) != null) {
-                Stream.of(filesLine)
-                        .map(s -> s.replace(", "," Value:"))
-                        .map(s -> s.replace("[", ""))
-                        .map(s -> s.replace("]", ""))
-                        .map("Filename:"::concat)
-                        .peek(System.out::println).collect(Collectors.toList());
+//                Stream.of(filesLine)
+//                        .map(s -> s.replace(", "," Value:"))
+//                        .map(s -> s.replace("[", ""))
+//                        .map(s -> s.replace("]", ""))
+//                        .map("Filename:"::concat)
+//                        .peek(System.out::println).collect(Collectors.toList());
                 //System.out.println(filesLine);
             }
             lineReader.close();
@@ -129,9 +130,20 @@ public class Utility implements Runnable {
         return searchResults;
     }
 
-    public static void addFile(){
-        boolean available = false;
-        System.out.println("Ange ett filnamn: ");
+    public static void add(Entity o) {
+        Class objectClass = o.getClass();
+        Field[] fields = objectClass.getFields();
+        for (Field f : fields) {
+            System.out.println(f);
+        }
+        String filename = o.toString() + o.getID();
+        Serializer.serialize(o, filename);
+        System.out.println(o);
+        //var deSer = Serializer.deserialize(filename);
+        FileManager.saveInfo(o);
+
+
+      /*  boolean available = false;
         String fileName = Utility.getLine().toLowerCase();
         do {
             if (Utility.search(fileName).size() > 0) {
@@ -149,10 +161,10 @@ public class Utility implements Runnable {
             }
         }while (!available);
         List<String> fileInformation = FileManager.collectInfo(fileName);
-        Utility.save(fileInformation, fileName);
+        Utility.save(fileInformation, fileName); */
     }
     private static void save(List<String> fileInformation, String fileName){
-        FileManager.saveInfo(fileInformation);
+       // FileManager.saveInfo(fileInformation);
         Serializer.serialize(fileInformation, fileName);
     }
     private static void getFileInfo() {

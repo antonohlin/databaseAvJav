@@ -1,16 +1,20 @@
-{
-    "Song": [
-        { title: "aaa", albumID: "1234", ... },
-        { title: "Numb", artist: "LP" },
-        { title: "Numb", Artist: "LP" },
-    ]
-}
-[jacka, Grå, 499]
-[Song, title:banan, album:kjhgfd]
-
-
-{
-    "jacka": [ value1, value2 ... ],
-    "song": [ value1, value2 ... ],
-    "båt": [ value1, value2 ... ],
-}
+test
+test
+test
+test
+test
+test
+test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test
+Song:test

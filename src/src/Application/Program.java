@@ -3,11 +3,15 @@ package Application;
 import Database.Database;
 import Database.Utility;
 
+import javax.swing.text.Utilities;
 import javax.xml.crypto.Data;
 
 public class Program {
     Program(){
         new Database();
+
+        Song c = new Song("test");
+        Utility.add(c);
 
         int menuChoice;
         do {

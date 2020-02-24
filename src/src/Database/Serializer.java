@@ -11,12 +11,12 @@ public class Serializer implements Runnable{
     Serializer(){
 
     }
-    static void serialize(List<String> info, String fileName) {
+    static void serialize(Object o, String fileName) {
 
-        Path path = Path.of(Database.getFilesFolder() +fileName);
+        Path path = Path.of(Database.getFilesFolder()+fileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(path)))
         {
-            oos.writeObject(info);
+            oos.writeObject(o);
         } catch (IOException e) {
             e.printStackTrace();
         }
