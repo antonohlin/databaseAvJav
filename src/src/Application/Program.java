@@ -3,9 +3,12 @@ package Application;
 import Database.Database;
 import Database.Utility;
 
+import javax.xml.crypto.Data;
+
 public class Program {
     Program(){
         new Database();
+
         int menuChoice;
         do {
             Menus.printWelcomeMenu();

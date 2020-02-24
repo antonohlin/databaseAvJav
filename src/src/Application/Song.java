@@ -7,16 +7,11 @@ public class Song implements Serializable {
     String artist;
     String album;
     int songID;
-    Song(){
+    public Song(){
         title = "untitled";
     }
     Song (String title){
         this.title = title;
-    }
-    Song(String[] info){
-        this.title = info[0];
-        this.artist = info[1];
-        this.album = info[2];
     }
 
     @Override

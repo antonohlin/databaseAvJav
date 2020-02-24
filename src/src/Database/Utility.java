@@ -2,6 +2,7 @@ package Database;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,8 +59,33 @@ public class Utility implements Runnable {
         }
         int chosenFile = Utility.getInt()-1;
         String fileName = Utility.search(search).get(chosenFile);
+        Utility.removeLine(fileName);
         List<String> fileInformation = FileManager.collectInfo(fileName);
         Utility.save(fileInformation, fileName);
+    }
+
+    private static void removeLine(String fileName) {
+        try {
+            File inputFile = new File(Database.getFilepath());
+            String tempPath = "src\\src\\Database\\Files\\filesText\\temp.txt";
+            File tempFile = new File(tempPath);
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                if (currentLine.contains(fileName)) {
+                    continue;
+                }
+                writer.write(currentLine + "\n");
+            }
+            writer.close();
+            reader.close();
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+            Files.write(Path.of(tempPath), "".getBytes());
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 
