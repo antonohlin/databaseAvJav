@@ -7,13 +7,13 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class Serializer implements Runnable{
-    private static final String filePath = "src\\src\\Database\\Files\\";
+    private static final String filesFolder = "src\\src\\Database\\Files\\";
     Serializer(){
 
     }
     static void serialize(List<String> info, String fileName) {
 
-        Path path = Path.of(filePath+fileName);
+        Path path = Path.of(filesFolder +fileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(path)))
         {
             oos.writeObject(info);
@@ -23,7 +23,7 @@ public class Serializer implements Runnable{
     }
 
     static Object deserialize(String fileName) {
-        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Path.of(filePath+fileName)))) {
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Path.of(filesFolder +fileName)))) {
             return ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
