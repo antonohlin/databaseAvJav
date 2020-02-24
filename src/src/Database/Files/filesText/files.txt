@@ -1,4 +1,6 @@
 [song, Hejhej, Anton]
 [test, test]
 [jacka, Blue, 150, false]
-[boat, 15000, Green, Dry]
+[boat, 15000, Green, Dry][jacka, Blå, Grön, 199]
+[sten, Grå, 100]
+[jacka, Blå, röd, 1999]

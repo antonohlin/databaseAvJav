@@ -1,6 +1,7 @@
 package Database;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,13 +48,20 @@ public class Utility implements Runnable {
     private static void editFile() {
         System.out.println("Sök efter fil att redigera: ");
         String search = Utility.getLine();
+        int searchIndex = 1;
         if (Utility.search(search).size() > 0){
             for (String s : Utility.search(search)) {
-                System.out.println(s);
+                System.out.println("["+searchIndex++ + "] "+ s);
             }
-            System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat" );
+            System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
+            System.out.print("Ange siffran för den fil du vill redigera, välj 0 för att avbryta: ");
         }
+        int chosenFile = Utility.getInt()-1;
+        String fileName = Utility.search(search).get(chosenFile);
+        List<String> fileInformation = FileManager.collectInfo(fileName);
+        Utility.save(fileInformation, fileName);
     }
+
 
     private static void printAllInfo() {
         try {
@@ -115,10 +123,12 @@ public class Utility implements Runnable {
             }
         }while (!available);
         List<String> fileInformation = FileManager.collectInfo(fileName);
+        Utility.save(fileInformation, fileName);
+    }
+    private static void save(List<String> fileInformation, String fileName){
         FileManager.saveInfo(fileInformation);
         Serializer.serialize(fileInformation, fileName);
     }
-
     private static void getFileInfo() {
         System.out.print("Ange filnamn: ");
         String fileName = Utility.getLine().toLowerCase();
