@@ -5,13 +5,12 @@ import Database.Utility;
 
 public class Program {
     Program(){
-        new Database();
 
-        Album album1 = new Album("Allebumme");
-        Song c = new Song("lååååd");
-        album1.songs.add(c);
+
+        new Database();
+        Song c = new Song("blablabla");
         Utility.add(c);
-        Utility.add(album1);
+
         int menuChoice;
         do {
             Menus.printWelcomeMenu();

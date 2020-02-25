@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Utility implements Runnable {
     private static final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -28,7 +30,7 @@ public class Utility implements Runnable {
                     Utility.delete();
                     break;
                 case 2:
-                   Utility.getFileInfo();
+                    Utility.getFileInfo();
                     break;
                 case 3:
                     Utility.printAllInfo();
@@ -51,14 +53,24 @@ public class Utility implements Runnable {
         int searchIndex = 1;
         if (Utility.search(search).size() > 0){
             for (String s : Utility.search(search)) {
-                System.out.println("["+searchIndex++ + "] "+ s);
+                System.out.println("["+ searchIndex++ + "] "+ s);
             }
             System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
             System.out.print("Ange siffran för den fil du vill redigera, välj 0 för att avbryta: ");
+            int chosenFile = Utility.getInt()-1;
+            String fileName = Utility.search(search).get(chosenFile);
+            List<String> list = Arrays.asList(fileName.split(":"));
+            String editedClass = list.get(0);
+            editedClass = editedClass.substring(0, 1).toUpperCase() + editedClass.substring(1);
+            System.out.println("Ange nytt namn: ");
+            String newName = Utility.getLine();
+            System.out.println("Ange nytt ID: ");
+            String newID = Utility.getLine();
+            FileManager.saveEdit(editedClass+":"+newName+newID);
+            Utility.removeLine(fileName);
+        } else {
+            System.out.println("Inga resultat.");
         }
-        int chosenFile = Utility.getInt()-1;
-        String fileName = Utility.search(search).get(chosenFile);
-        Utility.removeLine(fileName);
     }
 
     private static void delete() {
@@ -71,10 +83,13 @@ public class Utility implements Runnable {
             }
             System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
             System.out.print("Ange siffran för den fil du vill ta bort, välj 0 för att avbryta: ");
+            int chosenFile = Utility.getInt()-1;
+            String fileName = Utility.search(search).get(chosenFile);
+            Utility.removeLine(fileName);
+        } else {
+            System.out.println("Inga resultat.");
         }
-        int chosenFile = Utility.getInt()-1;
-        String fileName = Utility.search(search).get(chosenFile);
-        Utility.removeLine(fileName);
+
     }
 
     private static void removeLine(String fileName) {
@@ -139,10 +154,8 @@ public class Utility implements Runnable {
         for (Field ignored : objectClass.getFields()) {
             Field name = objectClass.getField("name");
             Field id = objectClass.getField("id");
-            System.out.println(name.get(o));
-            System.out.println(id.getLong(o));
         }
-        } catch (NoSuchFieldException | IllegalAccessException e){
+        } catch (NoSuchFieldException e){
             e.printStackTrace();
         }
         String filename = o.toString() + o.getID();
@@ -162,10 +175,12 @@ public class Utility implements Runnable {
             }
             System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
             System.out.print("Ange siffran för den fil du vill få information om, välj 0 för att avbryta: ");
+            int chosenFile = Utility.getInt()-1;
+            String fileName = Utility.search(search).get(chosenFile);
+            System.out.println(fileName);
+        } else {
+            System.out.println("Inga resultat.");
         }
-        int chosenFile = Utility.getInt()-1;
-        String fileName = Utility.search(search).get(chosenFile);
-        System.out.println(fileName);
     }
 
     public static int getInt(){

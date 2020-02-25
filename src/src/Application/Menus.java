@@ -5,7 +5,7 @@ public class Menus {
 
     }
     public static void printWelcomeMenu(){
-        System.out.println("Startmeny för cool app!");
+        System.out.println("---Startmeny---");
         System.out.println("[1] Appfunktion");
         System.out.println("[2] Appfunktion");
         System.out.println("[3] Appfunktion");

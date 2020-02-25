@@ -42,6 +42,17 @@ public class FileManager implements Runnable {
         }
     }
 
+    static void saveEdit(String info){
+        try {
+            FileWriter fileWriter = new FileWriter(Database.getFilepath(), true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println(info);
+            printWriter.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Override
