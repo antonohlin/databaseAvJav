@@ -1,11 +1,9 @@
 package Database;
-
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Utility implements Runnable {
@@ -17,7 +15,7 @@ public class Utility implements Runnable {
 
     public static void menu(){
         System.out.println("Hej vad vill du göra?");
-        System.out.println("[1] Lägga till en fil");
+        System.out.println("[1] Ta bort fil");
         System.out.println("[2] Hämta information om en fil");
         System.out.println("[3] Skriv ut en lista över mina filer");
         System.out.println("[4] Redigera en fil");
@@ -27,16 +25,16 @@ public class Utility implements Runnable {
             menuChoice = Utility.getInt();
             switch (menuChoice) {
                 case 1:
-                    //Utility.add();
+                    Utility.delete();
                     break;
                 case 2:
-                   // Utility.getFileInfo();
+                   Utility.getFileInfo();
                     break;
                 case 3:
-                   // Utility.printAllInfo();
+                    Utility.printAllInfo();
                     break;
                 case 4:
-                   // Utility.editFile();
+                   Utility.editFile();
                     break;
                 case 5:
                     break;
@@ -61,8 +59,22 @@ public class Utility implements Runnable {
         int chosenFile = Utility.getInt()-1;
         String fileName = Utility.search(search).get(chosenFile);
         Utility.removeLine(fileName);
-        List<String> fileInformation = FileManager.collectInfo(fileName);
-        Utility.save(fileInformation, fileName);
+    }
+
+    private static void delete() {
+        System.out.println("Sök efter fil att ta bort: ");
+        String search = Utility.getLine();
+        int searchIndex = 1;
+        if (Utility.search(search).size() > 0){
+            for (String s : Utility.search(search)) {
+                System.out.println("["+searchIndex++ + "] "+ s);
+            }
+            System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
+            System.out.print("Ange siffran för den fil du vill ta bort, välj 0 för att avbryta: ");
+        }
+        int chosenFile = Utility.getInt()-1;
+        String fileName = Utility.search(search).get(chosenFile);
+        Utility.removeLine(fileName);
     }
 
     private static void removeLine(String fileName) {
@@ -74,7 +86,7 @@ public class Utility implements Runnable {
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
-                if (currentLine.contains(fileName)) {
+                if (currentLine.toLowerCase().contains(fileName)) {
                     continue;
                 }
                 writer.write(currentLine + "\n");
@@ -89,19 +101,12 @@ public class Utility implements Runnable {
         }
     }
 
-
     private static void printAllInfo() {
         try {
             BufferedReader lineReader = new BufferedReader(new FileReader(Database.getFilepath()));
             String filesLine;
             while ((filesLine = lineReader.readLine()) != null) {
-//                Stream.of(filesLine)
-//                        .map(s -> s.replace(", "," Value:"))
-//                        .map(s -> s.replace("[", ""))
-//                        .map(s -> s.replace("]", ""))
-//                        .map("Filename:"::concat)
-//                        .peek(System.out::println).collect(Collectors.toList());
-                //System.out.println(filesLine);
+                System.out.println(filesLine);
             }
             lineReader.close();
         } catch (IOException ex) {
@@ -115,9 +120,7 @@ public class Utility implements Runnable {
             BufferedReader lineReader = new BufferedReader(new FileReader(Database.getFilepath()));
             String filesLine;
             while ((filesLine = lineReader.readLine()) != null) {
-                filesLine = filesLine.split(" ")[0]
-                        .replace("[","")
-                        .replace(",","");
+                filesLine = filesLine.toLowerCase();
                 assert search != null;
                 if (filesLine.contains(search)){
                     searchResults.add(filesLine);
@@ -139,41 +142,30 @@ public class Utility implements Runnable {
             System.out.println(name.get(o));
             System.out.println(id.getLong(o));
         }
-        } catch (NoSuchFieldException | IllegalAccessException e){     e.printStackTrace();   }
+        } catch (NoSuchFieldException | IllegalAccessException e){
+            e.printStackTrace();
+        }
         String filename = o.toString() + o.getID();
-        Serializer.serialize(o, filename);
-        FileManager.saveInfo(o);
-
-
-      /*  boolean available = false;
-        String fileName = Utility.getLine().toLowerCase();
-        do {
-            if (Utility.search(fileName).size() > 0) {
-                for (String s : Utility.search(fileName)) {
-                    if (fileName.equals(s)) {
-                        available = false;
-                        System.out.println("Filnamnet: " + s + " finns redan. Ange ett nytt filnamn: ");
-                        fileName = Utility.getLine().toLowerCase(); break;
-                    } else {
-                        available = true;
-                    }
-                }
-            } else {
-                available = true;
-            }
-        }while (!available);
-        List<String> fileInformation = FileManager.collectInfo(fileName);
-        Utility.save(fileInformation, fileName); */
+        Utility.save(o, filename);
     }
-    private static void save(List<String> fileInformation, String fileName){
-       // FileManager.saveInfo(fileInformation);
-        Serializer.serialize(fileInformation, fileName);
+    private static void save(Entity o, String fileName){
+        FileManager.saveInfo(o);
+        Serializer.serialize(o, fileName);
     }
     private static void getFileInfo() {
-        System.out.print("Ange filnamn: ");
-        String fileName = Utility.getLine().toLowerCase();
-        Object deSer = Serializer.deserialize(fileName);
-        System.out.println(deSer.toString());
+        System.out.print("Sök efter fil: ");
+        String search = Utility.getLine();
+        int searchIndex = 1;
+        if (Utility.search(search).size() > 0){
+            for (String s : Utility.search(search)) {
+                System.out.println("["+searchIndex++ + "] "+ s);
+            }
+            System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
+            System.out.print("Ange siffran för den fil du vill få information om, välj 0 för att avbryta: ");
+        }
+        int chosenFile = Utility.getInt()-1;
+        String fileName = Utility.search(search).get(chosenFile);
+        System.out.println(fileName);
     }
 
     public static int getInt(){

@@ -7,10 +7,11 @@ public class Program {
     Program(){
         new Database();
 
-        Album album1 = new Album("bruh");
-        Song c = new Song("Bruhhh");
+        Album album1 = new Album("Allebumme");
+        Song c = new Song("lååååd");
         album1.songs.add(c);
         Utility.add(c);
+        Utility.add(album1);
         int menuChoice;
         do {
             Menus.printWelcomeMenu();
