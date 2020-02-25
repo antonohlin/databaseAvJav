@@ -4,7 +4,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public class Serializer implements Runnable{
 
@@ -12,7 +11,6 @@ public class Serializer implements Runnable{
 
     }
     static void serialize(Object o, String fileName) {
-
         Path path = Path.of(Database.getFilesFolder()+fileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(path)))
         {

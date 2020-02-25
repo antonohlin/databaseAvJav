@@ -1,29 +1,28 @@
 package Application;
 
 import Database.Entity;
-
 import java.io.Serializable;
 
 public class Song implements Serializable, Entity {
-    public String title;
-    public long songID;
+    private String name;
+    private long id;
 
     public Song(){
-        title = "untitled";
+        name = "untitled";
     }
 
     Song (String title){
-        this.title = title;
-        this.songID = System.currentTimeMillis();
+        this.name = title;
+        this.id = System.currentTimeMillis();
     }
 
     @Override
     public String toString() {
-        return title;
+        return name;
     }
 
     @Override
     public long getID() {
-        return songID;
+        return id;
     }
 }

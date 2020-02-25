@@ -1,18 +1,16 @@
 package Application;
-
 import Database.Database;
 import Database.Utility;
 
-import javax.swing.text.Utilities;
-import javax.xml.crypto.Data;
 
 public class Program {
     Program(){
         new Database();
 
-        Song c = new Song("test");
+        Album album1 = new Album("bruh");
+        Song c = new Song("Bruhhh");
+        album1.songs.add(c);
         Utility.add(c);
-
         int menuChoice;
         do {
             Menus.printWelcomeMenu();

@@ -31,11 +31,11 @@ public class FileManager implements Runnable {
         return info;
     }
 
-    static void saveInfo(Object info){
+    static void saveInfo(Entity info){
         try {
             FileWriter fileWriter = new FileWriter(Database.getFilepath(), true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.println(info.getClass().getSimpleName() + ":" + info);
+            printWriter.println(info.getClass().getSimpleName() + ":" + info.toString() + info.getID());
             printWriter.close();
         } catch (IOException e){
             e.printStackTrace();

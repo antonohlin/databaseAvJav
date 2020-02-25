@@ -132,14 +132,16 @@ public class Utility implements Runnable {
 
     public static void add(Entity o) {
         Class objectClass = o.getClass();
-        Field[] fields = objectClass.getFields();
-        for (Field f : fields) {
-            System.out.println(f);
+        try {
+        for (Field ignored : objectClass.getFields()) {
+            Field name = objectClass.getField("name");
+            Field id = objectClass.getField("id");
+            System.out.println(name.get(o));
+            System.out.println(id.getLong(o));
         }
+        } catch (NoSuchFieldException | IllegalAccessException e){     e.printStackTrace();   }
         String filename = o.toString() + o.getID();
         Serializer.serialize(o, filename);
-        System.out.println(o);
-        //var deSer = Serializer.deserialize(filename);
         FileManager.saveInfo(o);
 
 
