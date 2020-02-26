@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileManager implements Runnable {
-    private final static Scanner input = new Scanner(System.in);
 
     FileManager(){
 
