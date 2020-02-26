@@ -97,7 +97,14 @@ public class Utility implements Runnable {
             System.out.print("Ange siffran för den fil du vill ta bort, välj 0 för att avbryta: ");
             int chosenFile = Utility.getInt()-1;
             String fileName = Utility.search(search).get(chosenFile);
+            List<String> list = Arrays.asList(fileName.split(":"));
+            String editedName = list.get(1);
             Utility.removeLine(fileName);
+            try {
+                Files.deleteIfExists(Paths.get(Database.getFilesFolder()+editedName));
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         } else {
             System.out.println("Inga resultat.");
         }
