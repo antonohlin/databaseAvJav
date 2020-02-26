@@ -179,6 +179,8 @@ public class Utility implements Runnable {
             System.out.print("Ange siffran för den fil du vill få information om, välj 0 för att avbryta: ");
             int chosenFile = Utility.getInt()-1;
             String fileName = Utility.search(search).get(chosenFile);
+            /*List<String> list = Arrays.asList(fileName.split(":"));
+            String nameToDeSer = list.get(1);*/
             System.out.println(fileName);
         } else {
             System.out.println("Inga resultat.");
