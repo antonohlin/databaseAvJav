@@ -2,7 +2,9 @@ package Database;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,14 +62,25 @@ public class Utility implements Runnable {
             String fileName = Utility.search(search).get(chosenFile);
             List<String> list = Arrays.asList(fileName.split(":"));
             String editedClass = list.get(0);
+            String editedName = list.get(1);
             editedClass = editedClass.substring(0, 1).toUpperCase() + editedClass.substring(1);
+
+            var deSer = Serializer.deserialize(editedName);
             System.out.println("Ange nytt namn: ");
             String newName = Utility.getLine();
             System.out.println("Ange nytt ID: ");
             String newID = Utility.getLine();
+
             String newLine = (editedClass+":"+newName+newID).replaceAll("\\s","");
+            String nameToSerialize = (newName+newID).replaceAll("\\s","");
+            Serializer.serialize(deSer, nameToSerialize);
             FileManager.saveEdit(newLine);
             Utility.removeLine(fileName);
+            try {
+                Files.deleteIfExists(Paths.get(Database.getFilesFolder()+editedName));
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         } else {
             System.out.println("Inga resultat.");
         }

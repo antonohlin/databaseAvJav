@@ -10,20 +10,21 @@ public class Program {
 
         new Database();
 
-        Song a = new Song("Låten");
-        Song b = new Song("Den andra låten");
+//        Song a = new Song("Låten");
+//        Song b = new Song("Den andra låten");
+//
+//        Artist c = new Artist("Artisten");
+//
+//        Album d = new Album("Albumet");
+//
+//        d.songs.add(a);
+//        d.songs.add(b);
+//        c.albums.add(d);
+//
+//        Utility.add(a);
+//        Utility.add(c);
+//        Utility.add(d);
 
-        Artist c = new Artist("Artisten");
-
-        Album d = new Album("Albumet");
-
-        d.songs.add(a);
-        d.songs.add(b);
-        c.albums.add(d);
-
-        Utility.add(a);
-        Utility.add(c);
-        Utility.add(d);
 
         int menuChoice;
         do {
