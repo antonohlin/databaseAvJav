@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Utility implements Runnable {
     private static final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -66,7 +65,8 @@ public class Utility implements Runnable {
             String newName = Utility.getLine();
             System.out.println("Ange nytt ID: ");
             String newID = Utility.getLine();
-            FileManager.saveEdit(editedClass+":"+newName+newID);
+            String newLine = (editedClass+":"+newName+newID).replaceAll("\\s","");
+            FileManager.saveEdit(newLine);
             Utility.removeLine(fileName);
         } else {
             System.out.println("Inga resultat.");
@@ -161,10 +161,12 @@ public class Utility implements Runnable {
         String filename = o.toString() + o.getID();
         Utility.save(o, filename);
     }
+
     private static void save(Entity o, String fileName){
         FileManager.saveInfo(o);
         Serializer.serialize(o, fileName);
     }
+
     private static void getFileInfo() {
         System.out.print("Sök efter fil: ");
         String search = Utility.getLine();

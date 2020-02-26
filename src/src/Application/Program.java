@@ -1,6 +1,7 @@
 package Application;
 import Database.Database;
 import Database.Utility;
+import jdk.jshell.execution.Util;
 
 
 public class Program {
@@ -8,8 +9,16 @@ public class Program {
 
 
         new Database();
-        Song c = new Song("blablabla");
-        Utility.add(c);
+//        Song a = new Song("Låten");
+//        Song b = new Song("Den andra låten");
+//        Artist c = new Artist("Artisten");
+//        Album d = new Album("Albumet");
+//        d.songs.add(a);
+//        d.songs.add(b);
+//        c.albums.add(d);
+//        Utility.add(a);
+//        Utility.add(c);
+//        Utility.add(d);
 
         int menuChoice;
         do {
