@@ -18,6 +18,14 @@ public class Album implements Serializable, Entity {
         this.id = System.currentTimeMillis();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return name;

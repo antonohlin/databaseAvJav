@@ -1,12 +1,15 @@
 package Database;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class Utility implements Runnable {
     private static final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -48,6 +51,8 @@ public class Utility implements Runnable {
     }
 
     private static void editFile() {
+        String newLine;
+        String nameToSerialize;
         System.out.println("Sök efter fil att redigera: ");
         String search = Utility.getLine();
         int searchIndex = 1;
@@ -65,21 +70,28 @@ public class Utility implements Runnable {
             editedClass = editedClass.substring(0, 1).toUpperCase() + editedClass.substring(1);
 
             var deSer = Serializer.deserialize(editedName);
-            System.out.println("Ange nytt namn: ");
-            String newName = Utility.getLine();
-            System.out.println("Ange nytt ID: ");
+            assert deSer != null;
+            try {
+                Method setName = deSer.getClass().getMethod("setName", String.class);
+                Method getID = deSer.getClass().getMethod("getID");
+                System.out.println("Ange nytt namn: ");
+                String newName = Utility.getLine();
+                setName.invoke(deSer,newName);
+            System.out.println("Ange nytt ID (Lämna blankt för att använda ordinarie): ");
             String newID = Utility.getLine();
-
-            String newLine = (editedClass+":"+newName+newID).replaceAll("\\s","");
-            String nameToSerialize = (newName+newID).replaceAll("\\s","");
+            if (newID.isBlank()){
+                long oldID = (long) getID.invoke(deSer);
+                newLine = (editedClass+":"+newName+oldID).replaceAll("\\s","");
+                nameToSerialize = (newName+oldID).replaceAll("\\s","");
+            } else {
+            newLine = (editedClass+":"+newName+newID).replaceAll("\\s","");
+            nameToSerialize = (newName+newID).replaceAll("\\s","");
+            }
             Serializer.serialize(deSer, nameToSerialize);
             FileManager.saveEdit(newLine);
             Utility.removeLine(fileName);
-            try {
-                Files.deleteIfExists(Paths.get(Database.getFilesFolder()+editedName));
-            } catch (IOException e){
-                e.printStackTrace();
-            }
+            Files.deleteIfExists(Paths.get(Database.getFilesFolder()+editedName));
+            } catch (NoSuchMethodException | IllegalAccessException | IOException | InvocationTargetException e){e.printStackTrace();}
         } else {
             System.out.println("Inga resultat.");
         }
@@ -108,7 +120,6 @@ public class Utility implements Runnable {
         } else {
             System.out.println("Inga resultat.");
         }
-
     }
 
     private static void removeLine(String fileName) {
