@@ -65,45 +65,48 @@ public class Utility implements Runnable {
         System.out.println("Sök efter fil att redigera: ");
         search = Utility.getLine();
         int searchIndex = 1;
-        if (Utility.search(search).size() > 0){
+        if (Utility.search(search).size() > 0) {
             for (String s : Utility.search(search)) {
-                System.out.println("["+ searchIndex++ + "] "+ s);
+                System.out.println("[" + searchIndex++ + "] " + s);
             }
-            System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
+            System.out.println("Hittade " + Utility.search(search).size() + " sökresultat");
             System.out.print("Ange siffran för den fil du vill redigera, välj 0 för att avbryta: ");
-            int chosenFile = Utility.getInt()-1;
-            if (chosenFile != -1){
-            fileName = Utility.search(search).get(chosenFile);
-            List<String> list = Arrays.asList(fileName.split(":"));
-            editedClass = list.get(0);
-            editedName = list.get(1);
-            editedClass = editedClass.substring(0, 1).toUpperCase() + editedClass.substring(1);
-            var deSer = Serializer.deserialize(editedName);
-            assert deSer != null;
-            try {
-                Method setName = deSer.getClass().getMethod("setName", String.class);
-                Method getID = deSer.getClass().getMethod("getID");
-                System.out.println("Ange nytt namn: ");
-                newName = Utility.getLine();
-                setName.invoke(deSer,newName);
-            System.out.println("Ange nytt ID (Lämna blankt för att använda ordinarie): ");
-            newID = Utility.getLine();
-            if (newID.isBlank()){
-                long oldID = (long) getID.invoke(deSer);
-                newLine = (editedClass+":"+newName+oldID).replaceAll("\\s","");
-                nameToSerialize = (newName+oldID).replaceAll("\\s","");
-            } else {
-            newLine = (editedClass+":"+newName+newID).replaceAll("\\s","");
-            nameToSerialize = (newName+newID).replaceAll("\\s","");
+            int chosenFile = Utility.getInt() - 1;
+            if (chosenFile != -1) {
+                fileName = Utility.search(search).get(chosenFile);
+                List<String> list = Arrays.asList(fileName.split(":"));
+                editedClass = list.get(0);
+                editedName = list.get(1);
+                editedClass = editedClass.substring(0, 1).toUpperCase() + editedClass.substring(1);
+                var deSer = Serializer.deserialize(editedName);
+                assert deSer != null;
+                try {
+                    Method setName = deSer.getClass().getMethod("setName", String.class);
+                    Method getID = deSer.getClass().getMethod("getID");
+                    System.out.println("Ange nytt namn: ");
+                    newName = Utility.getLine();
+                    setName.invoke(deSer, newName);
+                    System.out.println("Ange nytt ID (Lämna blankt för att använda ordinarie): ");
+                    newID = Utility.getLine();
+                    if (newID.isBlank()) {
+                        long oldID = (long) getID.invoke(deSer);
+                        newLine = (editedClass + ":" + newName + oldID).replaceAll("\\s", "");
+                        nameToSerialize = (newName + oldID).replaceAll("\\s", "");
+                    } else {
+                        newLine = (editedClass + ":" + newName + newID).replaceAll("\\s", "");
+                        nameToSerialize = (newName + newID).replaceAll("\\s", "");
+                    }
+                    Serializer.serialize(deSer, nameToSerialize);
+                    Utility.saveEdit(newLine);
+                    Utility.removeLine(fileName);
+                    Files.deleteIfExists(Paths.get(Database.getFilesFolder() + editedName));
+                } catch (NoSuchMethodException | IllegalAccessException | IOException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
             }
-            Serializer.serialize(deSer, nameToSerialize);
-            Utility.saveEdit(newLine);
-            Utility.removeLine(fileName);
-            Files.deleteIfExists(Paths.get(Database.getFilesFolder()+editedName));
-            } catch (NoSuchMethodException | IllegalAccessException | IOException | InvocationTargetException e){e.printStackTrace();}
-        } else {
-            System.out.println("Inga resultat.");
         }
+        else {
+            System.out.println("Inga resultat.");
         }
     }
 
@@ -131,10 +134,11 @@ public class Utility implements Runnable {
             } catch (IOException e){
                 e.printStackTrace();
             }
+            }
         } else {
             System.out.println("Inga resultat.");
         }
-        }
+
     }
 
     private static void removeLine(String fileName) {
@@ -218,20 +222,21 @@ public class Utility implements Runnable {
         System.out.print("Sök efter fil: ");
         String search = Utility.getLine();
         int searchIndex = 1;
-        if (Utility.search(search).size() > 0){
+        if (Utility.search(search).size() > 0) {
             for (String s : Utility.search(search)) {
-                System.out.println("["+searchIndex++ + "] "+ s);
+                System.out.println("[" + searchIndex++ + "] " + s);
             }
-            System.out.println("Hittade "+ Utility.search(search).size()+ " sökresultat");
+            System.out.println("Hittade " + Utility.search(search).size() + " sökresultat");
             System.out.print("Ange siffran för den fil du vill få information om, välj 0 för att avbryta: ");
-            int chosenFile = Utility.getInt()-1;
-            if (chosenFile != -1){
-            String fileName = Utility.search(search).get(chosenFile);
-            System.out.println(fileName);
+            int chosenFile = Utility.getInt() - 1;
+            if (chosenFile != -1) {
+                String fileName = Utility.search(search).get(chosenFile);
+                System.out.println(fileName);
+            }
         } else {
             System.out.println("Inga resultat.");
         }
-        }
+
     }
 
     private static int getInt(){

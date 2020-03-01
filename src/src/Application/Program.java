@@ -14,9 +14,7 @@ public class Program {
 
 //        Song a = new Song("Låten");
 //        Song b = new Song("Den andra låten");
-//
 //        Artist c = new Artist("Artisten");
-//
 //        Album d = new Album("Albumet");
 //
 //        d.songs.add(a);
