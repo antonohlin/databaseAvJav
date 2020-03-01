@@ -23,7 +23,6 @@ public class Database implements Runnable{
 
     @Override
     public void run() {
-        new FileManager();
         new Serializer();
         new Utility();
     }

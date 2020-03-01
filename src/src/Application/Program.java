@@ -3,10 +3,12 @@ import Database.Database;
 import Database.Utility;
 import jdk.jshell.execution.Util;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 
 public class Program {
     Program(){
-
 
         new Database();
 
@@ -29,7 +31,8 @@ public class Program {
         int menuChoice;
         do {
             Menus.printWelcomeMenu();
-            menuChoice = Utility.getInt();
+            Scanner input = new Scanner(System.in);
+            menuChoice = input.nextInt();
         switch (menuChoice) {
             case 1:
                 System.out.println("Appfunktion 1");
